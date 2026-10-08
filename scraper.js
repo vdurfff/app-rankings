@@ -1,8 +1,9 @@
 "use strict";
 
-const yargs = require("yargs")
-const gplay = require("google-play-scraper")
-const appstore = require("app-store-scraper")
+import yargs from "yargs"
+import { hideBin } from "yargs/helpers"
+import gplay from "google-play-scraper"
+import appstore from "app-store-scraper"
 
 
 function pretty_json_stdout(json) {
@@ -14,7 +15,7 @@ function pretty_json_stdout(json) {
     }, 2));
 }
 
-yargs
+yargs(hideBin(process.argv))
     .command(
         "play_store <collection>",
         "Scrape rankings from the Google Play Store",
@@ -23,7 +24,7 @@ yargs
                 .positional("collection", {
                     type: "string",
                     choices: Object.keys(gplay.collection),
-                    require: true
+                    required: true
                 })
                 .option("category", {
                     type: "string",
@@ -39,7 +40,7 @@ yargs
                 })
                 .option("num", {
                     type: "number",
-                    default: 200
+                    default: 15
                 })
         },
         (argv) => {
@@ -66,7 +67,7 @@ yargs
                 .positional("collection", {
                     type: "string",
                     choices: Object.keys(appstore.collection),
-                    require: true
+                    required: true
                 })
                 .option("category", {
                     type: "string",
@@ -78,7 +79,7 @@ yargs
                 })
                 .option("num", {
                     type: "number",
-                    default: 200
+                    default: 15
                 })
         },
         (argv) => {
@@ -98,4 +99,4 @@ yargs
     )
     .help()
     .strict()
-    .argv
+    .parse()
