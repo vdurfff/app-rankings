@@ -21,3 +21,4 @@ for country in ${countries[@]}; do
         node scraper.js app_store --country ${country} ${collection} > app_store/rankings/${country}_${collection}.json
     done
 done
+
